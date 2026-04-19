@@ -3,6 +3,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import difflib
+import logging
 import re
 import time
 
@@ -11,12 +12,18 @@ import feedparser
 import pytz
 
 from django.conf import settings
-from django.contrib.gis.db import models
+from django.db import models
 from django.core.mail import EmailMultiAlternatives, send_mail
+from django.urls import reverse
 from django.utils import timezone
 
+logger = logging.getLogger(__name__)
 
 class UrlContentTracker(models.Model):
+    class Meta: # pylint: disable=too-few-public-methods
+        verbose_name = 'URL content tracker'
+        verbose_name_plural = 'URL content trackers'
+
     objects = models.Manager()
 
     title = models.CharField(max_length=1024)
@@ -29,6 +36,12 @@ class UrlContentTracker(models.Model):
 
     ignore_http_errors = models.BooleanField(default=False)
 
+    def __str__(self):
+        return '%s' % self.title
+
+    def get_absolute_url(self):
+        return reverse('simple_web_tools_url_update', args=[self.pk])
+
     def needs_check(self):
         now = timezone.now()
 
@@ -39,14 +52,22 @@ class UrlContentTracker(models.Model):
 
         return False
 
-    def do_check(self):
-        scraper = cloudscraper.create_scraper()
+    def do_check(self, content=None):
+        status_code = 0
 
-        response = scraper.get(self.url)
+        message = None
 
-        content = response.text # opener.open(request).read().decode('utf-8')
+        if content is None:
+            scraper = cloudscraper.create_scraper()
 
-        if 200 <= response.status_code < 300:
+            response = scraper.get(self.url)
+
+            content = response.text # opener.open(request).read().decode('utf-8')
+            status_code = response.status_code
+        else:
+            status_code = 200 # Simulate successful request
+
+        if 200 <= status_code < 300:
             for pattern in self.replace_pattern.splitlines():
                 if pattern is not None and pattern.strip():
                     content = re.sub(pattern, '', content, flags=re.DOTALL|re.MULTILINE)
@@ -61,19 +82,32 @@ class UrlContentTracker(models.Model):
             if diff_content != '' and len(diff_content) > self.change_size:
                 self.last_content = content
 
-                send_to = ['chris@audacious-software.com']
+                send_to = settings.SIMPLE_WEB_TOOLS_CONTENT_DESTINATION
 
-                send_mail('[AS] Updated: ' + self.title, diff_content, 'robot@audacious-software.com', send_to, fail_silently=False)
+                subject = '[%s] Updated: %s' % (settings.SIMPLE_WEB_TOOLS_CONTENT_PREFIX, self.title)
+
+                send_mail(subject, diff_content, settings.ADMINS[0][1], [send_to], fail_silently=False)
+                message  = 'Successfully parsed content for URL: %s' % self.url
+                logger.info(message)
+            else:
+                message  = 'No significant changes observed for URL: %s' % self.url
+                logger.info(message)
         else:
             if self.ignore_http_errors is False:
-                print('Unable to parse URL: %s -  %s' % (self.url, response.status_code))
-                print(response.text)
+                message  = 'Unable to parse URL: %s -  %s' % (self.url, status_code)
+                logger.error(message)
+                logger.error(content)
 
         self.last_check = timezone.now()
         self.save()
 
+        return message
 
 class RssFeed(models.Model):
+    class Meta: # pylint: disable=too-few-public-methods
+        verbose_name = 'RSS feed'
+        verbose_name_plural = 'RSS feeds'
+
     objects = models.Manager()
 
     title = models.CharField(max_length=1024)
@@ -139,6 +173,10 @@ class RssFeed(models.Model):
 
 
 class RssItem(models.Model):
+    class Meta: # pylint: disable=too-few-public-methods
+        verbose_name = 'RSS feed item'
+        verbose_name_plural = 'RSS feed items'
+
     objects = models.Manager()
 
     feed = models.ForeignKey(RssFeed, related_name='items', on_delete=models.CASCADE)

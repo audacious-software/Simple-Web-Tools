@@ -1,0 +1,53 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ tracker.title }} &bull; Simple Web Tools</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'simple_web_tools/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  </head>
+
+  <body class="bg-light">
+    <div class="container">
+      <div class="py-5">
+        <h2>{{ tracker.title }}</h2>
+        <p><a href="{{ tracker.url }}" target="_blank">{{ tracker.url }}</a></p>
+        {% csrf_token %}
+        <label for="content" class="mt-3">Raw content</label>
+        <textarea class="form-control" id="content" rows="8"></textarea>            
+        <button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Check Content</button>
+      </div>
+    </div>
+
+    <script src="{% static 'simple_web_tools/vendor/js.cookie.min.js' %}"></script>
+    <script src="{% static 'simple_web_tools/vendor/jquery/js/jquery-4.0.0.min.js' %}"></script>
+    <script src="{% static 'simple_web_tools/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script>
+      (function() {
+        $.ajaxSetup({ 
+          beforeSend: function(xhr, settings) {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+              xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+            }
+          }
+        })
+
+        $('button[type="submit"]').off('click')
+
+        $('button[type="submit"]').on('click', (eventObj) => {
+          eventObj.preventDefault()
+
+          const payload = {
+            'content': $('textarea').val()
+          }
+
+          $.post("{% url 'simple_web_tools_url_update' tracker.pk %}", payload, (data) => {
+            alert(data.message)
+          })
+        })
+      })();
+    </script>
+  </body>
+</html>

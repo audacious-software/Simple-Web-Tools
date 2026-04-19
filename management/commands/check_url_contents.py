@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from web_tools.models import UrlContentTracker
+from ...models import UrlContentTracker
 
 class Command(BaseCommand):
     def handle(self, *args, **options):

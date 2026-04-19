@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web_tools', '0004_urlcontenttracker_ignore_http_errors'),
+        ('simple_web_tools', '0004_urlcontenttracker_ignore_http_errors'),
     ]
 
     operations = [

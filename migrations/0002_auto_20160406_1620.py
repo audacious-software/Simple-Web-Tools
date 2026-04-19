@@ -10,7 +10,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web_tools', '0001_initial'),
+        ('simple_web_tools', '0001_initial'),
     ]
 
     operations = [

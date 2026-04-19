@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('url', models.URLField(max_length=1024)),
                 ('content', models.TextField(blank=True, max_length=1048576, null=True)),
                 ('date', models.DateTimeField()),
-                ('feed', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='web_tools.RssFeed')),
+                ('feed', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='simple_web_tools.RssFeed')),
             ],
         ),
         migrations.CreateModel(
