@@ -51,7 +51,7 @@ jobs:
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
             python manage.py test
-            cp nagios_monitor/.pylintrc .
+            cp simple_web_tools/.pylintrc .
             pylint simple_web_tools
             bandit -r .
       - save_cache:
@@ -101,7 +101,7 @@ jobs:
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
             python manage.py test
-            cp nagios_monitor/.pylintrc .
+            cp simple_web_tools/.pylintrc .
             pylint simple_web_tools
             bandit -r .
       - save_cache:
@@ -151,7 +151,7 @@ jobs:
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
             python manage.py test
-            cp nagios_monitor/.pylintrc .
+            cp simple_web_tools/.pylintrc .
             pylint simple_web_tools
             bandit -r .
       - save_cache:
@@ -201,7 +201,7 @@ jobs:
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
             python manage.py test
-            cp nagios_monitor/.pylintrc .
+            cp simple_web_tools/.pylintrc .
             pylint simple_web_tools
             bandit -r .
       - save_cache:
@@ -251,7 +251,7 @@ jobs:
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
             python manage.py test
-            cp nagios_monitor/.pylintrc .
+            cp simple_web_tools/.pylintrc .
             pylint simple_web_tools
             bandit -r .
       - save_cache:
@@ -299,7 +299,7 @@ jobs:
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
             python manage.py test
-            cp nagios_monitor/.pylintrc .
+            cp simple_web_tools/.pylintrc .
             pylint simple_web_tools
             bandit -r .
 
