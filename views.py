@@ -14,12 +14,12 @@ def simple_web_tools_url_update(request, tracker_id):
     if request.method == 'POST':
         content = request.POST.get('content', None)
 
-        if content is not None and len(content) > 0:
+        if content is not None and len(content) > 0: # pylint: disable=len-as-condition
             message = tracker.do_check(content)
         else:
             message = 'No content provided.'
 
-        return JsonResponse({ 'message': message })
+        return JsonResponse({'message': message})
 
     context = {
         'tracker': tracker

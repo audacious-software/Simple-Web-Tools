@@ -17,10 +17,10 @@ from django.core.mail import EmailMultiAlternatives, send_mail
 from django.urls import reverse
 from django.utils import timezone
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__) # pylint: disable-invalid-name
 
 class UrlContentTracker(models.Model):
-    class Meta: # pylint: disable=too-few-public-methods
+    class Meta: # pylint: disable=too-few-public-methods, old-style-class, no-init
         verbose_name = 'URL content tracker'
         verbose_name_plural = 'URL content trackers'
 
@@ -87,14 +87,14 @@ class UrlContentTracker(models.Model):
                 subject = '[%s] Updated: %s' % (settings.SIMPLE_WEB_TOOLS_CONTENT_PREFIX, self.title)
 
                 send_mail(subject, diff_content, settings.ADMINS[0][1], [send_to], fail_silently=False)
-                message  = 'Successfully parsed content for URL: %s' % self.url
+                message = 'Successfully parsed content for URL: %s' % self.url
                 logger.info(message)
             else:
-                message  = 'No significant changes observed for URL: %s' % self.url
+                message = 'No significant changes observed for URL: %s' % self.url
                 logger.info(message)
         else:
             if self.ignore_http_errors is False:
-                message  = 'Unable to parse URL: %s -  %s' % (self.url, status_code)
+                message = 'Unable to parse URL: %s -  %s' % (self.url, status_code)
                 logger.error(message)
                 logger.error(content)
 
@@ -104,7 +104,7 @@ class UrlContentTracker(models.Model):
         return message
 
 class RssFeed(models.Model):
-    class Meta: # pylint: disable=too-few-public-methods
+    class Meta: # pylint: disable=too-few-public-methods, old-style-class, no-init
         verbose_name = 'RSS feed'
         verbose_name_plural = 'RSS feeds'
 
@@ -173,7 +173,7 @@ class RssFeed(models.Model):
 
 
 class RssItem(models.Model):
-    class Meta: # pylint: disable=too-few-public-methods
+    class Meta: # pylint: disable=too-few-public-methods, old-style-class, no-init
         verbose_name = 'RSS feed item'
         verbose_name_plural = 'RSS feed items'
 
