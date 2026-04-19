@@ -40,7 +40,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'nagios_monitor.urls'
+ROOT_URLCONF = 'simple_web_tools.urls'
 
 TEMPLATES = [
     {

@@ -46,7 +46,7 @@ jobs:
             cd django
             django-admin startproject swt
             mv ../simple_web_tools swt
-            cd nm
+            cd swt
             cp simple_web_tools/.circleci/circle_settings.py swt/settings.py
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
@@ -96,7 +96,7 @@ jobs:
             cd django
             django-admin startproject swt
             mv ../simple_web_tools swt
-            cd nm
+            cd swt
             cp simple_web_tools/.circleci/circle_settings.py swt/settings.py
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
@@ -146,7 +146,7 @@ jobs:
             cd django
             django-admin startproject swt
             mv ../simple_web_tools swt
-            cd nm
+            cd swt
             cp simple_web_tools/.circleci/circle_settings.py swt/settings.py
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
@@ -196,7 +196,7 @@ jobs:
             cd django
             django-admin startproject swt
             mv ../simple_web_tools swt
-            cd nm
+            cd swt
             cp simple_web_tools/.circleci/circle_settings.py swt/settings.py
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
@@ -246,7 +246,7 @@ jobs:
             cd django
             django-admin startproject swt
             mv ../simple_web_tools swt
-            cd nm
+            cd swt
             cp simple_web_tools/.circleci/circle_settings.py swt/settings.py
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
@@ -294,7 +294,7 @@ jobs:
             cd django
             django-admin startproject swt
             mv ../simple_web_tools swt
-            cd nm
+            cd swt
             cp simple_web_tools/.circleci/circle_settings.py swt/settings.py
             cp simple_web_tools/.circleci/circle_urls.py swt/urls.py
             python manage.py migrate
