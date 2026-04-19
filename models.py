@@ -17,7 +17,7 @@ from django.core.mail import EmailMultiAlternatives, send_mail
 from django.urls import reverse
 from django.utils import timezone
 
-logger = logging.getLogger(__name__) # pylint: disable-invalid-name
+logger = logging.getLogger(__name__) # pylint: disable=invalid-name
 
 class UrlContentTracker(models.Model):
     class Meta: # pylint: disable=too-few-public-methods, old-style-class, no-init
