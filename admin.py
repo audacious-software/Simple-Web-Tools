@@ -10,6 +10,8 @@ def reset_last_checked(modeladmin, request, queryset): # pylint: disable=unused-
 reset_last_checked.short_description = 'Reset last checked date'
 
 class UrlContentTrackerAdmin(admin.ModelAdmin):
+    exclude = ('last_content',)
+
     list_display = ('title', 'url', 'last_check', 'check_interval')
     list_filter = ['last_check', 'check_interval']
     search_fields = ['title', 'url', 'last_content']
