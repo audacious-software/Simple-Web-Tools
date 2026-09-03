@@ -36,6 +36,8 @@ class UrlContentTracker(models.Model):
 
     ignore_http_errors = models.BooleanField(default=False)
 
+    notes = models.TextField(max_length=(1048576 * 2), blank=True, default='')
+
     def __str__(self):
         return '%s' % self.title
 

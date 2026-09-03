@@ -14,7 +14,7 @@ class UrlContentTrackerAdmin(admin.ModelAdmin):
 
     list_display = ('title', 'url', 'last_check', 'check_interval')
     list_filter = ['last_check', 'check_interval']
-    search_fields = ['title', 'url', 'last_content']
+    search_fields = ['title', 'url', 'last_content', 'notes']
     actions = [reset_last_checked]
 
 admin.site.register(UrlContentTracker, UrlContentTrackerAdmin)
